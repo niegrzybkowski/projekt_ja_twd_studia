@@ -4,6 +4,12 @@ extract_timestamp_date <- function(val) {
 extract_domain <- function(val) {
   stringr::str_match(val, "(?<=http[s]?:\\/\\/)(\\w+[.])*\\w+")[,1]
 }
+extract_domain2 <- function(val) {
+  urltools::domain(val) %>%
+    urltools::suffix_extract() %>%
+    mutate(domsuf = paste(domain, suffix, sep =".")) %>%
+    select(domsuf)
+}
 #RJSONIO::fromJSON("raw_data/BrowserHistory.json")[["Browser History"]] -> raw_data
 
 #raw_data %>%
