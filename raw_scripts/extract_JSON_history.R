@@ -1,9 +1,6 @@
 extract_timestamp_date <- function(val) {
   as.POSIXct(val/1000000, origin = "1970-01-01")
 }
-extract_domain <- function(val) {
-  stringr::str_match(val, "(?<=http[s]?:\\/\\/)(\\w+[.])*\\w+")[,1]
-}
 extract_domain2 <- function(val, name = "domain") {
   urltools::domain(val) %>%
     urltools::suffix_extract() %>%
