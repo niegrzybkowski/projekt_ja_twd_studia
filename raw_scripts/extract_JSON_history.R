@@ -24,8 +24,18 @@ raw_data %>%
   mutate(across("url", extract_domain2)) %>%
   rename(domain = "url") -> ooo
 
+ooo %>% group_by(domain) %>% summarise(count = n()) %>% View()
+
 ooo %>%
-  filter(domain %in% c("stackoverflow.com", "wikipedia.org")) %>%
+  filter(domain %in% c("stackoverflow.com", "wikipedia.org", "github.com")) %>%
+  mutate(hour = lubridate::hour(time_usec)) %>%
+  group_by(domain, hour) %>%
+  summarise(count = n()) %>% View
+  ggplot(aes(x = hour, color = domain, y = count)) +
+  geom_line()
+
+ooo %>%
+  filter(domain %in% c("google.com", "youtube.com", "facebook.com")) %>%
   mutate(hour = lubridate::hour(time_usec)) %>%
   group_by(domain, hour) %>%
   summarise(count = n()) %>%
