@@ -30,7 +30,7 @@ ooo %>%
   filter(domain %in% c("stackoverflow.com", "wikipedia.org", "github.com")) %>%
   mutate(hour = lubridate::hour(time_usec)) %>%
   group_by(domain, hour) %>%
-  summarise(count = n()) %>% View
+  summarise(count = n()) %>%
   ggplot(aes(x = hour, color = domain, y = count)) +
   geom_line()
 
