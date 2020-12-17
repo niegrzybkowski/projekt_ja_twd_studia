@@ -7,30 +7,30 @@ extract_domain <- function(val) {
 extract_domain2 <- function(val, name = "domain") {
   urltools::domain(val) %>%
     urltools::suffix_extract() %>%
-    mutate(domsuf = paste(domain, suffix, sep =".")) %>%
+    mutate(domsuf = if_else(is.na(domain), "", paste(domain, suffix, sep ="."))) %>%
     select(domsuf) %>%
     pull()
 
 }
-#RJSONIO::fromJSON("raw_data/BrowserHistory.json")[["Browser History"]] -> raw_data
 
-#raw_data %>%
-#  purrr::transpose() ->
-#  transposed
+# tidyjson jest powolny i długo to ładuje, ale RJSONIO nie chciał współpracować
+tidyjson::read_json("raw_data/BrowserHistory.json") %>%
+  tidyjson::gather_object() %>%
+  tidyjson::gather_array() %>%
+  tidyjson::spread_all() %>%
+  as_tibble() %>%
+  select(time_usec, url, title, page_transition) ->
+  raw_data
 
-tidyjson::read_json("raw_data/BrowserHistory.json") %>% tidyjson::gather_object() %>% tidyjson::gather_array() -> japierdole
-
-japierdole %>% tidyjson::spread_all() -> dsaadsaf
-
-dsaadsaf %>% select(time_usec, url, title) -> dafr
-
-dafr %>% as_tibble() %>% mutate_at("time_usec", extract_timestamp_date) %>% mutate(across("url", extract_domain2)) %>%
-  rename(domain = "url")-> ooo
-#-> ooo
+raw_data %>%
+  mutate_at("time_usec", extract_timestamp_date) %>%
+  mutate(across("url", extract_domain2)) %>%
+  rename(domain = "url") -> ooo
 
 ooo %>%
-  filter(url %in% c("stackoverflow.com", "pl.wikipedia.org")) %>%
-  group_by(url, time_usec) %>%
+  filter(domain %in% c("stackoverflow.com", "wikipedia.org")) %>%
+  mutate(hour = lubridate::hour(time_usec)) %>%
+  group_by(domain, hour) %>%
   summarise(count = n()) %>%
-  ggplot(aes(x = time_usec, color = url, y = count)) +
+  ggplot(aes(x = hour, color = domain, y = count)) +
   geom_line()
