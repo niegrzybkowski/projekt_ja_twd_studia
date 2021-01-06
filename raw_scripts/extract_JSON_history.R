@@ -16,7 +16,7 @@ tidyjson::read_json("raw_data/BrowserHistory.json") %>%
   tidyjson::gather_array() %>%
   tidyjson::spread_all() %>%
   as_tibble() %>%
-  select(time_usec, url, title, page_transition) ->
+  select(time_usec, url) ->
   raw_data
 
 raw_data %>%
@@ -24,7 +24,16 @@ raw_data %>%
   mutate(across("url", extract_domain2)) %>%
   rename(domain = "url") -> ooo
 
+domain_vec <- c("stackoverflow.com", "wikipedia.org", "github.com", "pw.edu.pl",
+                "youtube.com", "google.com", "facebook.com", "instagram.com")
+
+ooo %>%
+  filter(domain %in% domain_vec) ->
+  datetime_formatted
+
 ooo %>% group_by(domain) %>% summarise(count = n()) %>% View()
+
+ooo %>% View()
 
 ooo %>%
   filter(domain %in% c("stackoverflow.com", "wikipedia.org", "github.com")) %>%
@@ -35,9 +44,19 @@ ooo %>%
   geom_line()
 
 ooo %>%
+  filter(domain %in% c("stackoverflow.com")) %>%
+  mutate(date = lubridate::month(time_usec)) %>%
+  group_by(domain, date) %>%
+  ggplot(aes(x = date, color = domain)) +
+  geom_bar()
+
+ooo %>%
   filter(domain %in% c("google.com", "youtube.com", "facebook.com")) %>%
   mutate(hour = lubridate::hour(time_usec)) %>%
   group_by(domain, hour) %>%
   summarise(count = n()) %>%
   ggplot(aes(x = hour, color = domain, y = count)) +
   geom_line()
+
+
+datetime_formatted %>% write.csv(file="kacper.csv")
