@@ -58,7 +58,7 @@ app.layout = html.Div([
                 ]
             ),
             html.Label("test tttttttttttt ttttttttttt tttttttttttt")  # todo: this shit dont work
-        ], style={"width": "16rem", "height": "100%"}),
+        ], style={"width": "16rem", "height": "100rem"}),
         html.Br(),
         dcc.Graph(
             id="PerDayBarplot",
