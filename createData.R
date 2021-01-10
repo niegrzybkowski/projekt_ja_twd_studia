@@ -1,8 +1,8 @@
 library(dplyr)
 
-df <- read.csv("kacper.csv")
+
 create_count <- function(name){
-  df <- read.csv(name)
+  df <- read.csv(paste(name,".csv", sep = ""))
 
   df$time_usec <- as.Date(df$time_usec, '%Y-%m-%d')
 
@@ -18,13 +18,13 @@ create_count <- function(name){
               "youtube.com",
               "google.com",
               "facebook.com",
-              "instagram.com"), times = 360)
+              "instagram.com"), times = length(a)/8)
   df2 <- data.frame("time_usec" = a, "domain" = b)
   finaldf <- left_join(df2, df1, by = c("time_usec", "domain"))
-  finaldf$count.y[is.na(finaldf$count.y)] <- 0
+  finaldf$count[is.na(finaldf$count)] <- 0
   write.csv(finaldf, paste(name,"Count.csv", sep = ""))
 }
+create_count("jakub")
 
 
-install.packages("zoo")
 
