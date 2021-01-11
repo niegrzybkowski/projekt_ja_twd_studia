@@ -9,9 +9,12 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-user1 = pd.read_csv("../kacper.csv")
-user2 = None
-user3 = None
+kacper = pd.read_csv("../kacper.csv")
+kacperCount = pd.read_csv("../kacperCount.csv")
+jakub = pd.read_csv("../jakub.csv")
+jakubCount = pd.read_csv("../jakubCount.csv")
+jan = pd.read_csv("../jan.csv")
+janCount = pd.read_csv("../janCount.csv")
 
 DOMAINS = {"Stackoverflow": "stackoverflow.com",
            "Wikipedia": "wikipedia.org",
@@ -30,13 +33,22 @@ def to_dashformat(mapa: dict):
     return out
 
 
+def make_totalplot(selected_domains: [str]):
+    total_df = None
+    px.line(total_df)
+
+
+def make_perplot():
+    pass
+
+
 app.layout = html.Div([
     dcc.Markdown(children="# TWD projekt 3 dashboard"),
 
     dcc.Markdown(children="## Total usage over time"),
     dcc.Graph(
         id="TotalLineplot",
-        figure=px.histogram(user1, x="domain")  # todo: wygenerować lineplot
+        figure=px.histogram(kacper, x="domain")  # todo: wygenerować lineplot
     ),
     html.Label("Choose which sites to sum"),
     dcc.Dropdown(
@@ -62,7 +74,7 @@ app.layout = html.Div([
         html.Br(),
         dcc.Graph(
             id="PerDayBarplot",
-            figure=px.histogram(user1, x="domain")  # todo: wygenerować plot
+            figure=px.histogram(kacper, x="domain")  # todo: wygenerować plot
         )
     ], style={"columnCount": 2}),
 
@@ -75,7 +87,7 @@ app.layout = html.Div([
     ),
     dcc.Graph(
         id="histogram",
-        figure=px.histogram(user1, x="domain")
+        figure=px.histogram(kacper, x="domain")
     )
 ])
 
@@ -85,7 +97,7 @@ app.layout = html.Div([
     Input('domain-select', 'value')
 )
 def update_figure(selected):
-    df_filter = user1[user1["domain"].isin(selected)]
+    df_filter = kacper[kacper["domain"].isin(selected)]
     return px.histogram(df_filter, x="domain")
 
 
