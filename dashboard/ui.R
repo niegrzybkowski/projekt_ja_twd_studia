@@ -4,14 +4,14 @@ library(plotly)
 pageWithSidebar(
   headerPanel("Iris data"),
   sidebarPanel(
-    selectInput("plot_1_x",
+    selectInput("user_select",
                 label = "Wybierz użytkownika:",
                 choices = c("Jakub" = 1,
                             "Kacper" = 2,
                             "Janek" = 3),
                 multiple = TRUE,
                 selected = 1),
-    selectInput("plot_1_y",
+    selectInput("domain_select",
                 label = "Wybierz domenę:",
                 choices = c("stackoverflow.com",
                 "wikipedia.org",
