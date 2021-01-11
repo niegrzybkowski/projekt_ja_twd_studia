@@ -16,6 +16,9 @@ jakubCount = pd.read_csv("../jakubCount.csv")
 jan = pd.read_csv("../jan.csv")
 janCount = pd.read_csv("../janCount.csv")
 
+allCount = pd.read_csv("../allCount.csv")
+
+
 DOMAINS = {"Stackoverflow": "stackoverflow.com",
            "Wikipedia": "wikipedia.org",
            "GitHub": "github.com",
@@ -32,10 +35,16 @@ def to_dashformat(mapa: dict):
         out.append({"label": key, "value": mapa[key]})
     return out
 
-
+@app.callback(
+    Output("TotalLineplot", "figure"),
+    Input('DomainMultiselect', 'value')
+)
 def make_totalplot(selected_domains: [str]):
-    total_df = None
-    px.line(total_df)
+    total_df = allCount[allCount["domain"].isin(selected_domains)]
+    total_df = total_df.groupby(["date", "user"]).sum()
+    #total_df["count"] = total_df["count"].rolling(14, min_periods=1).mean()
+    total_df = total_df.reset_index()
+    return px.line(total_df, x="date", y="count", color="user")
 
 
 def make_perplot():
@@ -52,6 +61,7 @@ app.layout = html.Div([
     ),
     html.Label("Choose which sites to sum"),
     dcc.Dropdown(
+        id="DomainMultiselect",
         options=to_dashformat(DOMAINS),
         multi=True,
         value=[i for i in DOMAINS.values()]
