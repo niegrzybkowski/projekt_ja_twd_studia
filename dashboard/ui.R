@@ -4,28 +4,34 @@ library(plotly)
 pageWithSidebar(
   headerPanel("Iris data"),
   sidebarPanel(
-    checkboxInput("plot_1_colors",
-                  label = "Show Species",
-                  value = TRUE),
-    selectInput("plot_1_x",
-                label = "X:",
-                choices = colnames(iris)[-5],
-                selected = "Sepal.Length"),
-    selectInput("plot_1_y",
-                label = "Y:",
-                choices = colnames(iris)[-5],
-                selected = "Sepal.Width"),
-    sliderInput("plot_1_sample",
-                label = "Sample obs:",
-                min = 1, 
-                max = nrow(iris), 
-                value = 90,
-                animate = TRUE)
+    selectInput("user_select",
+                label = "Wybierz użytkownika:",
+                choices = c("Kacper" = "kacper",
+                            "Jakub" = "jakub",
+                            "Janek" = "jan"),
+                multiple = FALSE,
+                selected = "Kacper"),
+    selectInput("domain_select",
+                label = "Wybierz domenę:",
+                choices = c("stackoverflow.com",
+                "wikipedia.org",
+                "github.com",
+                "pw.edu.pl",
+                "youtube.com",
+                "google.com",
+                "facebook.com",
+                "instagram.com"),
+                selected = "stackoverflow.com")
   ),
   mainPanel(
-    plotlyOutput("plotly_1"),
     plotOutput("plot_1"),
-    DT::dataTableOutput("table_1")
-    # verbatimTextOutput("verbatim_1")
+    radioButtons(
+      "spiky_smooth",
+      label = "",
+      choices = list("Smooth" = T, "Spiky"= F),
+      selected = T
+    ),
+    plotOutput("plot_2"),
+    plotOutput("plot_3")
   )
 )

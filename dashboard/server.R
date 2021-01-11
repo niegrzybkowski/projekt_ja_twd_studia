@@ -2,40 +2,28 @@ library(DT)
 library(ggplot2)
 
 function(input, output, session){
-  
-
-  
-  output$table_1 <- DT::renderDataTable({
-    DT::datatable(iris)
-  })
-  
   output$plot_1 <- renderPlot({
-    sample_row <- sample(1:nrow(iris), input$plot_1_sample)
-    sampled_iris <- iris[sample_row, ]
-    
-    if (input$plot_1_colors) {
-      ggplot(sampled_iris, aes_string(x = input$plot_1_x, y = input$plot_1_y, color = "Species")) +
-        geom_point()  
-    } else {
-      ggplot(sampled_iris, aes_string(x = input$plot_1_x, y = input$plot_1_y)) +
-        geom_point()
-    }
-    
+    # cały okres
+    read.csv("../data/allCount.csv") %>%
+      dplyr::as_tibble() %>%
+      mutate(date = as.Date(date)) %>%
+      group_by(date, user, domain) %>%
+      summarise(count = sum(count)) %>%
+      filter(domain == input$domain_select) %>%
+      ggplot(aes(x = date, y = count, color = user)) +
+      geom_smooth(se = F) +
+      theme_bw() +
+      scale_x_date(limits = as.Date(c("2020-01-01", "2021-02-01"))) +
+      scale_y_continuous(limits = c(0, NA))
   })
-  
-  output$plotly_1 <- renderPlotly({
-    sample_row <- sample(1:nrow(iris), input$plot_1_sample)
-    sampled_iris <- iris[sample_row, ]
-    
-    if (input$plot_1_colors) {
-      p <- ggplot(sampled_iris, aes_string(x = input$plot_1_x, y = input$plot_1_y, color = "Species")) +
-        geom_point()  
-    } else {
-      p <- ggplot(sampled_iris, aes_string(x = input$plot_1_x, y = input$plot_1_y)) +
-        geom_point()
-    }
-    ggplotly(p)
-    
+  output$plot_2 <- renderPlot({
+    read.csv("../data/avgweekdays.csv") %>%
+      filter(user == input$user_select, domain == input$domain_select) %>%
+    ggplot(aes(x = weekday, y = average)) +
+      geom_col() + theme_bw()
+
   })
-  
+  output$plot_3 <- renderPlot({
+    # godzina
+  })
 }
