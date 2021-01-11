@@ -6,9 +6,9 @@ pageWithSidebar(
   sidebarPanel(
     selectInput("user_select",
                 label = "Wybierz użytkownika:",
-                choices = c("Jakub" = 1,
-                            "Kacper" = 2,
-                            "Janek" = 3),
+                choices = c("Jakub" = "jakub",
+                            "Kacper" = "kacper",
+                            "Janek" = "jan"),
                 multiple = TRUE,
                 selected = 1),
     selectInput("domain_select",
@@ -24,9 +24,8 @@ pageWithSidebar(
                 selected = "stackoverflow.com")
   ),
   mainPanel(
-    plotlyOutput("plotly_1"),
     plotOutput("plot_1"),
-    DT::dataTableOutput("table_1")
-    # verbatimTextOutput("verbatim_1")
+    plotOutput("plot_2"),
+    plotOutput("plot_3")
   )
 )
