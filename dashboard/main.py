@@ -35,6 +35,7 @@ def to_dashformat(mapa: dict):
         out.append({"label": key, "value": mapa[key]})
     return out
 
+
 @app.callback(
     Output("TotalLineplot", "figure"),
     Input('DomainMultiselect', 'value')
@@ -42,7 +43,7 @@ def to_dashformat(mapa: dict):
 def make_totalplot(selected_domains: [str]):
     total_df = allCount[allCount["domain"].isin(selected_domains)]
     total_df = total_df.groupby(["date", "user"]).sum()
-    #total_df["count"] = total_df["count"].rolling(14, min_periods=1).mean()
+    # total_df["count"] = total_df["count"].rolling(14, min_periods=1).mean()
     total_df = total_df.reset_index()
     return px.line(total_df, x="date", y="count", color="user")
 
@@ -69,22 +70,18 @@ app.layout = html.Div([
 
     dcc.Markdown(children="## Per weekday/hour usage"),
     html.Div([
-        html.Div([
-            html.Label("Choose person"),
-            dcc.RadioItems(
-                id="user-select",
-                options=[
-                    {"label": "Jakub", "value": "user1"},
-                    {"label": "Jan", "value": "user2"},
-                    {"label": "Kacper", "value": "user3"}
-                ]
-            ),
-            html.Label("test tttttttttttt ttttttttttt tttttttttttt")  # todo: this shit dont work
-        ], style={"width": "16rem", "height": "100rem"}),
         html.Br(),
         dcc.Graph(
             id="PerDayBarplot",
             figure=px.histogram(kacper, x="domain")  # todo: wygenerować plot
+        ),
+        dcc.RadioItems(
+            id="UserSelect",
+            options=[
+                {"label": "Jakub", "value": "user1"},
+                {"label": "Jan", "value": "user2"},
+                {"label": "Kacper", "value": "user3"}
+            ]
         )
     ], style={"columnCount": 2}),
 
