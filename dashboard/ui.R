@@ -25,6 +25,12 @@ pageWithSidebar(
   ),
   mainPanel(
     plotOutput("plot_1"),
+    radioButtons(
+      "spiky_smooth",
+      label = "",
+      choices = list("Smooth" = T, "Spiky"= F),
+      selected = T
+    ),
     plotOutput("plot_2"),
     plotOutput("plot_3")
   )
