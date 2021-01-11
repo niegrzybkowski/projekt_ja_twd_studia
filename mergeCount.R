@@ -1,0 +1,12 @@
+library(dplyr)
+
+kacper_c <- read.csv("kacperCount.csv")
+jakub_c <- read.csv("jakubCount.csv")
+jan_c <- read.csv("janCount.csv")
+all_c <- bind_rows(
+  kacper_c %>% select(-X) %>% mutate("user" = 1),
+  jakub_c %>% select(-X) %>% mutate("user" = 2),
+  jan_c %>% select(-X) %>% mutate("user"= 3)
+) %>% rename("date" = "time_usec")
+
+write.csv(all_c, "allCount.csv", row.names = F)
