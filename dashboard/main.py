@@ -38,14 +38,18 @@ def to_dashformat(mapa: dict):
 
 @app.callback(
     Output("TotalLineplot", "figure"),
-    Input('DomainMultiselect', 'value')
+    Input("totalPlotDomainSelect", "value")
 )
-def make_totalplot(selected_domains: [str]):
-    total_df = allCount[allCount["domain"].isin(selected_domains)]
+def make_totalplot(selected_domain: str):
+    print("kurea")
+    total_df = allCount[allCount["domain"] == selected_domain]
     total_df = total_df.groupby(["date", "user"]).sum()
     # total_df["count"] = total_df["count"].rolling(14, min_periods=1).mean()
     total_df = total_df.reset_index()
     return px.line(total_df, x="date", y="count", color="user")
+
+
+initTotalplot = make_totalplot("pw.edu.pl")
 
 
 def make_perplot():
@@ -58,14 +62,16 @@ app.layout = html.Div([
     dcc.Markdown(children="## Total usage over time"),
     dcc.Graph(
         id="TotalLineplot",
-        figure=px.histogram(kacper, x="domain")  # todo: wygenerować lineplot
+        figure=initTotalplot
     ),
     html.Label("Choose which sites to sum"),
     dcc.Dropdown(
-        id="DomainMultiselect",
-        options=to_dashformat(DOMAINS),
-        multi=True,
-        value=[i for i in DOMAINS.values()]
+        options=[
+            {'label': 'New York City', 'value': 'NYC'},
+            {'label': u'Montréal', 'value': 'MTL'},
+            {'label': 'San Francisco', 'value': 'SF'}
+        ],
+        value='MTL'
     ),
 
     dcc.Markdown(children="## Per weekday/hour usage"),
@@ -83,7 +89,7 @@ app.layout = html.Div([
                 {"label": "Kacper", "value": "user3"}
             ]
         )
-    ], style={"columnCount": 2}),
+    ]),
 
     # zostawiam ten bałagan na razie
     html.Label('Domeny'),
