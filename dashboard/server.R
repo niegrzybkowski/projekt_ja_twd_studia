@@ -4,7 +4,7 @@ library(ggplot2)
 function(input, output, session){
   output$plot_1 <- renderPlot({
     # cały okres
-    read.csv("../allCount.csv") %>%
+    read.csv("../data/allCount.csv") %>%
       as_tibble() %>%
       mutate(date = as.Date(date)) %>%
       group_by(date, user, domain) %>%
