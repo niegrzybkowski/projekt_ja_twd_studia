@@ -21,26 +21,26 @@ function(input, output, session){
       "#e88cd3",
       "#5fd9cd",
       "#ff7777",
-      "#cbdeef",
+      "#0000dd",
       "#91c8ff",
       "#b130ba"),
     medium_color = c(
       "#f48024",
-      "#777777",
+      "#8888bb",
       "#a526b8",
       "#0095af",
       "#dd3333",
-      "#8cb9e0",
+      "#dd0000",
       "#1877f2",
       "#4d5eca"),
     dark_color = c(
       "#b24e15",
-      "#222222",
+      "#000000",
       "#381567",
       "#1c475a",
       "#990000",
-      "#5d87af",
-      "#0b5ac1",
+      "#00dd00",
+      "#0b5ab1",
       "#e8c04a")
   )
   output$plot_1 <- renderPlot({
