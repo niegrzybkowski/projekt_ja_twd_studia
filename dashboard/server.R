@@ -57,8 +57,12 @@ function(input, output, session){
       scale_x_date(limits = as.Date(c("2020-01-01", "2021-02-01"))) +
       scale_y_continuous(limits = c(0, NA)) +
       scale_color_manual(
-        values = colors_df %>% filter(domain == input$domain_select) %>% select(-domain) %>% unlist(use.names = F)
-      )
+        values = colors_df %>%
+          filter(domain == input$domain_select) %>%
+          select(-domain) %>%
+          unlist(use.names = F)
+      ) +
+      labs(x = "Data", y = "Średnia liczba wejść", kolor = "Użytkownik")
   })
   output$plot_2 <- renderPlot({
     read.csv("../data/avgweekdays.csv") %>%
