@@ -25,6 +25,8 @@ create_count <- function(name){
   write.csv(finaldf, paste(name,"Count.csv", sep = ""))
 }
 create_count("jakub")
+create_count("kacper")
+create_count("janek")
 
 
 
