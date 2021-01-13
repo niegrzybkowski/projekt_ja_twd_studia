@@ -1,8 +1,8 @@
 library(DT)
 library(plotly)
 
-pageWithSidebar(
-  headerPanel("Nasze dane pomocy studenta"),
+navbarPage("Nasze dane pomocy studenta",
+           tabPanel("str1",
   sidebarPanel(
     selectInput("user_select",
                 label = "Wybierz użytkownika:",
@@ -46,4 +46,6 @@ pageWithSidebar(
     plotOutput("plot_2"),
     plotOutput("plot_3")
   )
-)
+),
+tabPanel("str2"),
+tabPanel("str3"))
