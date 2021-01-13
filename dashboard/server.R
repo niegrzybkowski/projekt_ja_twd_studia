@@ -52,7 +52,7 @@ function(input, output, session){
       summarise(count = sum(count)) %>%
       filter(domain == input$domain_select) %>%
     ggplot(aes(x = date, y = count, color = user)) +
-      geom_smooth(se = F, formula = y ~ x, method = "loess", family = "quasipoisson") +
+      geom_smooth(se = F, formula = y ~ x, method = "loess") +
       theme_bw() +
       scale_x_date(limits = as.Date(c("2020-01-01", "2021-02-01"))) +
       scale_y_continuous(limits = c(0, NA)) +
@@ -62,7 +62,7 @@ function(input, output, session){
           select(-domain) %>%
           unlist(use.names = F)
       ) +
-      labs(x = "Data", y = "Średnia liczba wejść", kolor = "Użytkownik")
+      labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik")
   })
   output$plot_2 <- renderPlot({
     read.csv("../data/avgweekdays.csv") %>%
