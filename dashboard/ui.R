@@ -43,9 +43,30 @@ navbarPage("Nasze dane pomocy studenta",
       choices = list("Smooth" = T, "Spiky"= F),
       selected = T
     ),
-    plotOutput("plot_2"),
     plotOutput("plot_3")
   )
 ),
-tabPanel("str2"),
+tabPanel("Średnia aktywność w tygodniu",
+         sidebarPanel(
+           selectInput("user_select1",
+                       label = "Wybierz użytkownika:",
+                       choices = c("Kacper" = "kacper",
+                                   "Jakub" = "jakub",
+                                   "Janek" = "jan"),
+                       multiple = FALSE,
+                       selected = "Kacper"),
+           selectInput("domain_select1",
+                       label = "Wybierz domenę:",
+                       choices = c("stackoverflow.com",
+                                   "wikipedia.org",
+                                   "github.com",
+                                   "pw.edu.pl",
+                                   "youtube.com",
+                                   "google.com",
+                                   "facebook.com",
+                                   "instagram.com"),
+                       selected = "stackoverflow.com")),
+         mainPanel(
+           plotlyOutput("plot_2")
+         )),
 tabPanel("str3"))
