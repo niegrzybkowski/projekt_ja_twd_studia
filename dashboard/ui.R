@@ -67,6 +67,7 @@ tabPanel("Średnia aktywność w tygodniu",
                                    "instagram.com"),
                        selected = "stackoverflow.com")),
          mainPanel(
-           plotlyOutput("plot_2")
+           plotlyOutput("plot_weekdays"),
+           plotlyOutput("plot_weekhours")
          )),
 tabPanel("str3"))

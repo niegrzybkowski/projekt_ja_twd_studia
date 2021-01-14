@@ -83,5 +83,5 @@ comb2 <- data.frame(user,weekday, hour, domain)
 
 combination <- left_join(comb2,comb1, by = c("user", "weekday", "hour", "domain"))
 combination$average[is.na(combination$average)] <- 0
-
+combination$weekday <- rep(c("niedz","pon", "wt", "sr", "czw", "pia", "sob"), each = 8*24, times = 3)
 write.csv(combination,"data\\avgweekdaysandhours.csv")

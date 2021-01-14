@@ -64,7 +64,7 @@ function(input, output, session){
       ) +
       labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik")
   })
-  output$plot_2 <- renderPlotly({
+  output$plot_weekdays <- renderPlotly({
     wdt <- read.csv("../data/avgweekdays.csv") %>%
       filter(user == input$user_select1, domain == input$domain_select1)
     wdt$weekday <- factor(c("niedz","pon", "wt", "sr", "czw", "pia", "sob"),
@@ -81,6 +81,20 @@ function(input, output, session){
       labs(x = "Dzień tygodnia", y = "Średnia liczba wejść"))
 
   })
+  output$plot_weekhours <- renderPlotly({
+    wdh <- read.csv("../data/avgweekdaysandhours.csv") %>%
+      filter(user == input$user_select1, domain == input$domain_select1, weekday == "pon")
+    wdh %>% ggplot(aes(x = hour, y = average)) +
+      geom_bar(stat = "identity", fill = colors_df %>%
+                 filter(domain == input$domain_select1) %>%
+                 select(dark_color) %>%
+                 unlist(use.names = FALSE)) +
+      theme_bw() + ggtitle("Średnia liczba wejść a godzina") +
+      theme(axis.title = element_text(size = 12),
+            axis.text = element_text(size = 10), title = element_text(size = 15)) +
+      labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(0:23))
+    })
+
   output$plot_3 <- renderPlot({
     # dany dzien
     kto = as.character(input$user_select)
