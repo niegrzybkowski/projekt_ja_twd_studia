@@ -126,6 +126,21 @@ function(input, output, session){
       updateSelectInput(session, "day_select1", selected = day)
     }})
 
+  unwrap_dow <- function(val) {
+    sapply(val,
+      function(x)
+        switch (x,
+        "pon" = "poniedziałek",
+        "wt" = "wtorek",
+        "sr" = "środa",
+        "czw" = "czwartek",
+        "pia" = "piątek",
+        "sob" = "sobota",
+        "niedz" = "niedziela"
+      )
+    )
+  }
+
   output$plot_weekhours <- renderPlot({
 
      wdh <- wdh %>%
@@ -137,7 +152,7 @@ function(input, output, session){
                  filter(domain == input$domain_select1) %>%
                  select(medium_color) %>%
                  unlist(use.names = FALSE)) +
-      theme_bw() + ggtitle(paste("Średnia liczba wejść a godzina- ", input$day_select1)) +
+      theme_bw() + ggtitle(paste("Średnia liczba wejść a godzina - ", unwrap_dow(input$day_select1))) +
       theme(axis.title = element_text(size = 16),
             axis.text = element_text(size = 13), title = element_text(size = 20)) +
       labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(minval:maxval))
@@ -147,8 +162,8 @@ function(input, output, session){
     cos <- wdt
     cos <- cos %>%
       filter(user == input$user_select1, domain == input$domain_select1)
-    cos$weekday <- c("niedz","pon", "wt", "sr", "czw", "pia", "sob")
-    cos$weekday <- factor(cos$weekday, levels = c("pon", "wt", "sr", "czw", "pia", "sob", "niedz"))
+    cos$weekday <- c("niedziela","poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota")
+    cos$weekday <- factor(cos$weekday, levels = c("poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"))
     cos %>% ggplot(aes(x = weekday, y = average)) +
       geom_bar(stat = "identity", fill = colors_df %>%
                  filter(domain == input$domain_select1) %>%
