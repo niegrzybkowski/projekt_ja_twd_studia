@@ -17,29 +17,29 @@ function(input, output, session){
       "instagram.com"),
     light_color = c(
       "#ffc43b",
-      "#cccccc",
+      "#8d8da5",
       "#e88cd3",
       "#5fd9cd",
-      "#ff7777",
+      "#ff5c5c",
       "#0000dd",
       "#91c8ff",
       "#b130ba"),
     medium_color = c(
       "#f48024",
-      "#8888bb",
+      "#63639e",
       "#a526b8",
       "#0095af",
-      "#dd3333",
-      "#dd0000",
+      "#f00000",
+      "#ffc30b",
       "#1877f2",
       "#4d5eca"),
     dark_color = c(
       "#b24e15",
-      "#000000",
+      "#2d2d39",
       "#381567",
       "#1c475a",
-      "#990000",
-      "#00dd00",
+      "#8f0000",
+      "#dd0000",
       "#0b5ab1",
       "#e8c04a")
   )
@@ -50,7 +50,7 @@ function(input, output, session){
     all_c %>%
       filter(domain == input$domain_select) %>%
     ggplot(aes(x = date, y = count, color = user)) +
-      geom_smooth(se = F, formula = y ~ x, method = "loess") + # , span = 0.5, size = 1.5
+      geom_smooth(se = F, formula = y ~ x, method = "loess", size = 2.5) + # , span = 0.5, size = 1.5
       theme_bw() +
       scale_x_date(limits = as.Date(c("2019-12-01", "2021-02-01"))) +
       scale_y_continuous(limits = c(0, NA)) +
