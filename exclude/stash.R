@@ -173,3 +173,31 @@ sliderInput(
   ),
   step = 30
 ),
+
+
+ooo %>% group_by(domain) %>% summarise(count = n()) %>% View()
+
+ooo %>% View()
+
+ooo %>%
+  filter(domain %in% c("stackoverflow.com", "wikipedia.org", "github.com")) %>%
+  mutate(hour = lubridate::hour(time_usec)) %>%
+  group_by(domain, hour) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = hour, color = domain, y = count)) +
+  geom_line()
+
+ooo %>%
+  filter(domain %in% c("stackoverflow.com")) %>%
+  mutate(date = lubridate::month(time_usec)) %>%
+  group_by(domain, date) %>%
+  ggplot(aes(x = date, color = domain)) +
+  geom_bar()
+
+ooo %>%
+  filter(domain %in% c("google.com", "youtube.com", "facebook.com")) %>%
+  mutate(hour = lubridate::hour(time_usec)) %>%
+  group_by(domain, hour) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = hour, color = domain, y = count)) +
+  geom_line()

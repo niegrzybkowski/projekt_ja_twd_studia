@@ -1,3 +1,5 @@
+# skrypt agreguje dane wygenerowane przez extract_JSON_history.R
+
 library(dplyr)
 
 

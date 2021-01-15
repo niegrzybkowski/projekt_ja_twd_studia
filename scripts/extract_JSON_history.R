@@ -1,3 +1,5 @@
+# skrypt wyciąga dane z google takeout i zamienia je w format bardziej przyjazny R
+
 extract_timestamp_date <- function(val) {
   as.POSIXct(val/1000000, origin = "1970-01-01")
 }
@@ -31,32 +33,4 @@ ooo %>%
   filter(domain %in% domain_vec) ->
   datetime_formatted
 
-ooo %>% group_by(domain) %>% summarise(count = n()) %>% View()
-
-ooo %>% View()
-
-ooo %>%
-  filter(domain %in% c("stackoverflow.com", "wikipedia.org", "github.com")) %>%
-  mutate(hour = lubridate::hour(time_usec)) %>%
-  group_by(domain, hour) %>%
-  summarise(count = n()) %>%
-  ggplot(aes(x = hour, color = domain, y = count)) +
-  geom_line()
-
-ooo %>%
-  filter(domain %in% c("stackoverflow.com")) %>%
-  mutate(date = lubridate::month(time_usec)) %>%
-  group_by(domain, date) %>%
-  ggplot(aes(x = date, color = domain)) +
-  geom_bar()
-
-ooo %>%
-  filter(domain %in% c("google.com", "youtube.com", "facebook.com")) %>%
-  mutate(hour = lubridate::hour(time_usec)) %>%
-  group_by(domain, hour) %>%
-  summarise(count = n()) %>%
-  ggplot(aes(x = hour, color = domain, y = count)) +
-  geom_line()
-
-
-datetime_formatted %>% write.csv(file="kacper.csv")
+datetime_formatted %>% write.csv(file="user.csv")

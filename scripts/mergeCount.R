@@ -1,3 +1,5 @@
+# skrypt łączy pliki wygenerowane za pomocą createData.R w jeden, potrzebny do wykresów
+
 library(dplyr)
 
 kacper_c <- read.csv("kacperCount.csv")

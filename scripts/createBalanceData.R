@@ -1,3 +1,5 @@
+# skrypt tworzy dane potrzebne trzeciej stronie dashboarda
+
 read.csv("data/allCount.csv", stringsAsFactors = F) %>%
   mutate(category = ifelse(domain %in% c("stackoverflow.com", "wikipedia.org", "github.com","pw.edu.pl"), "edu", "ent")) %>%
   mutate(date = as.Date(paste0(lubridate::year(date), "-", lubridate::month(date), "-01"))) %>%

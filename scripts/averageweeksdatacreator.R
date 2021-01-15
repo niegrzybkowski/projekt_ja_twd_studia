@@ -1,3 +1,5 @@
+# skrypt tworzy pliki csv wymagane do obsługi drugiej strony dashboarda
+
 library(lubridate)
 library(dplyr)
 
