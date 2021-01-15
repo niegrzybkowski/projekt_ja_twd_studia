@@ -3,6 +3,7 @@ library(ggplot2)
 library(data.table)
 library(lubridate)
 library(dplyr)
+library(plotly)
 
 function(input, output, session){
   colors_df <- read.csv("../data/colors.csv", stringsAsFactors = F)
@@ -187,13 +188,30 @@ function(input, output, session){
       write.csv("data/balance.csv", row.names = F)
   }
 
-  balance_df <- read.csv("../data/balance.csv")
+  balance_df <- read.csv("../data/balance.csv", stringsAsFactors = F)
 
   output$plot_scatter <- renderPlot({
     balance_df %>%
-    #  filter(date == input$???) %>%
+    filter(lubridate::year(date) == lubridate::year(input$balans) & lubridate::month(date) == lubridate::month(input$balans)) %>%
     ggplot(aes(x = edu, y = ent, color = user)) +
       geom_point(size = 5)
+  })
+  output$plotly_scatter <- renderPlotly({
+    balance_df %>%
+      plot_ly(
+        x = ~ent,
+        y = ~edu,
+        color = ~user,
+        type = "scatter",
+        mode = "markers",
+        frame = ~date,
+        size = 10
+      ) %>%
+      layout(
+        title = "Balans Rozrywka/Edukacja",
+        xaxis = list(title = "Rozrywka", zeroline = F),
+        yaxis = list(title = "Edukacja", zeroline = F)
+      )
   })
 
 
