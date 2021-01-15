@@ -3,21 +3,26 @@ library(plotly)
 
 navbarPage(
   "Nasze dane pomocy studenta",
-  tabPanel("Porównanie użytkowników/domen",
-    plotOutput("plot_1"),
-    selectInput(
-      "domain_select",
-      label = "Wybierz domenę lub kliknij na słupek poniżej:",
-      choices = c("stackoverflow.com",
-                  "wikipedia.org",
-                  "github.com",
-                  "pw.edu.pl",
-                  "youtube.com",
-                  "google.com",
-                  "facebook.com",
-                  "instagram.com"),
-      selected = "stackoverflow.com"),
-    plotOutput("plot_comp", click = "plot_comp_click")
+  tabPanel(
+    "Porównanie użytkowników/domen",
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(
+        "domain_select",
+        label = "Wybierz domenę lub kliknij na słupek poniżej:",
+        choices = c("stackoverflow.com",
+                    "wikipedia.org",
+                    "github.com",
+                    "pw.edu.pl",
+                    "youtube.com",
+                    "google.com",
+                    "facebook.com",
+                    "instagram.com"),
+        selected = "stackoverflow.com"),
+        plotOutput("plot_comp", click = "plot_comp_click", height = "300px")
+      ),
+      mainPanel(plotOutput("plot_1", height = "500px"))
+    )
 ),
 tabPanel("Średnia aktywność w tygodniu",
          sidebarPanel(

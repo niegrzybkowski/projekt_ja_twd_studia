@@ -83,7 +83,8 @@ function(input, output, session){
       ggtitle("Ogólne użycie stron") +
       labs(x = "Domena", y = "Łączna ilość wejść") +
       theme_bw()+
-      theme(axis.text.x = element_text(angle = 20, hjust = 1))
+      theme(axis.text.x = element_text(angle = 20, hjust = 1),
+            plot.background = element_rect(fill = "#f5f5f5"))
   })
 
   wdt <- read.csv("../data/avgweekdays.csv")
