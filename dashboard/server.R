@@ -64,36 +64,74 @@ function(input, output, session){
       ) +
       labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik")
   })
-  output$plot_weekdays <- renderPlotly({
-    wdt <- read.csv("../data/avgweekdays.csv") %>%
-      filter(user == input$user_select1, domain == input$domain_select1)
-    wdt$weekday <- factor(c("niedz","pon", "wt", "sr", "czw", "pia", "sob"),
-                         levels = c("pon", "wt", "sr", "czw", "pia", "sob", "niedz"))
+  observeEvent(input$plot_click,{
+  output$missing_plot <- renderUI({
+    day <- input$plot_click$x
+    if(day <= 1.5){
+      drawPlot("pon")
+    }
+    else if(day > 1.5 & day <= 2.5){
+     drawPlot("wt")
+    }
+    else if(day > 2.5 & day <= 3.5){
+      drawPlot("sr")
+    }
+    else if(day > 3.5 & day <= 4.5){
+      drawPlot("czw")
+    }
+    else if(day > 4.5 & day <= 5.5){
+      drawPlot("pia")
+    }
+    else if(day > 5.5 & day <= 6.5){
+      drawPlot("sob")
+    }
+    else if(day > 6.5 & day <= 7.5){
+      drawPlot("niedz")
+    }
+    else {
+      NULL
+    }
+  })})
+  drawPlot <- function(day){
+    output$plot_weekhours <- renderPlot({
+      wdh1 <- wdh
+      wdh1 <- wdh1 %>% filter(user == input$user_select1, domain == input$domain_select1, weekday == day)
+       ggplot(wdh1, aes(x = hour, y = average)) +
+        geom_bar(stat = "identity", fill = colors_df %>%
+                   filter(domain == input$domain_select1) %>%
+                   select(dark_color) %>%
+                   unlist(use.names = FALSE)) +
+        theme_bw() + ggtitle(paste("Średnia liczba wejść a godzina- ", day)) +
+        theme(axis.title = element_text(size = 16),
+              axis.text = element_text(size = 13), title = element_text(size = 20)) +
+        labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(0:23))
+    })
 
-    ggplotly(wdt %>% ggplot(aes(x = weekday, y = average)) +
+  }
+
+  wdt <- read.csv("../data/avgweekdays.csv")
+  wdh <- read.csv("../data/avgweekdaysandhours.csv")
+
+  output$plot_weekdays <- renderPlot({
+    cos <- wdt
+    cos <- cos %>%
+      filter(user == input$user_select1, domain == input$domain_select1)
+    cos$weekday <- c("niedz","pon", "wt", "sr", "czw", "pia", "sob")
+    cos$weekday <- factor(cos$weekday, levels = c("pon", "wt", "sr", "czw", "pia", "sob", "niedz"))
+    cos %>% ggplot(aes(x = weekday, y = average)) +
       geom_bar(stat = "identity", fill = colors_df %>%
                  filter(domain == input$domain_select1) %>%
                  select(dark_color) %>%
                  unlist(use.names = FALSE)) +
       theme_bw() + ggtitle("Średnia liczba wejść a dzień tygodnia") +
-      theme(axis.title = element_text(size = 12),
-            axis.text = element_text(size = 10), title = element_text(size = 15)) +
-      labs(x = "Dzień tygodnia", y = "Średnia liczba wejść"))
+      theme(axis.title = element_text(size = 16),
+            axis.text = element_text(size = 13), title = element_text(size = 20)) +
+      labs(x = "Dzień tygodnia", y = "Średnia liczba wejść") #+
+      #scale_x_discrete(labels = c("niedz","pon", "wt", "sr", "czw", "pia", "sob"))
 
   })
-  output$plot_weekhours <- renderPlotly({
-    wdh <- read.csv("../data/avgweekdaysandhours.csv") %>%
-      filter(user == input$user_select1, domain == input$domain_select1, weekday == "pon")
-    wdh %>% ggplot(aes(x = hour, y = average)) +
-      geom_bar(stat = "identity", fill = colors_df %>%
-                 filter(domain == input$domain_select1) %>%
-                 select(dark_color) %>%
-                 unlist(use.names = FALSE)) +
-      theme_bw() + ggtitle("Średnia liczba wejść a godzina") +
-      theme(axis.title = element_text(size = 12),
-            axis.text = element_text(size = 10), title = element_text(size = 15)) +
-      labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(0:23))
-    })
+
+
 
   output$plot_3 <- renderPlot({
     # dany dzien

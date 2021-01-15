@@ -43,7 +43,11 @@ navbarPage("Nasze dane pomocy studenta",
       choices = list("Smooth" = T, "Spiky"= F),
       selected = T
     ),
-    plotOutput("plot_3")
+    plotOutput("plot_3"),
+    tags$style(type="text/css",
+               ".shiny-output-error { visibility: hidden; }",
+               ".shiny-output-error:before { visibility: hidden; }"
+    )
   )
 ),
 tabPanel("Średnia aktywność w tygodniu",
@@ -67,7 +71,8 @@ tabPanel("Średnia aktywność w tygodniu",
                                    "instagram.com"),
                        selected = "stackoverflow.com")),
          mainPanel(
-           plotlyOutput("plot_weekdays"),
-           plotlyOutput("plot_weekhours")
+           plotOutput("plot_weekdays", click = "plot_click"),
+           plotOutput("plot_weekhours"),
+           uiOutput("missing_plot")
          )),
 tabPanel("str3"))
