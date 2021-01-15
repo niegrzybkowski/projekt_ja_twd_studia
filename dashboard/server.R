@@ -160,9 +160,12 @@ function(input, output, session){
 
 
   output$plot_weekhours <- renderPlot({
-     wdh %>%
-      filter(user == input$user_select1, domain == input$domain_select1, weekday == input$day_select1) %>%
-    ggplot( aes(x = hour, y = average)) +
+
+     wdh <- wdh %>%
+      filter(user == input$user_select1, domain == input$domain_select1, weekday == input$day_select1)
+    minval = min(wdh$hour)
+    maxval = max(wdh$hour)
+      ggplot(wdh, aes(x = hour, y = average)) +
       geom_bar(stat = "identity", fill = colors_df %>%
                  filter(domain == input$domain_select1) %>%
                  select(medium_color) %>%
@@ -170,7 +173,7 @@ function(input, output, session){
       theme_bw() + ggtitle(paste("Średnia liczba wejść a godzina- ", input$day_select1)) +
       theme(axis.title = element_text(size = 16),
             axis.text = element_text(size = 13), title = element_text(size = 20)) +
-      labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(0:23))
+      labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(minval:maxval))
   })
 
 
