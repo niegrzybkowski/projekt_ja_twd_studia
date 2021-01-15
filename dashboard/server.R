@@ -5,7 +5,7 @@ library(lubridate)
 library(dplyr)
 
 function(input, output, session){
-  colors_df <- read.csv("data/colors.csv", stringsAsFactors = F)
+  colors_df <- read.csv("../data/colors.csv", stringsAsFactors = F)
 
   # STRONA 1
   all_c <- read.csv("../data/allCount.csv", stringsAsFactors = F) %>%
@@ -25,13 +25,13 @@ function(input, output, session){
           filter(domain == input$domain_select) %>%
           select(-domain) %>%
           unlist(use.names = F),
-        labels = c("Jakub", "Jan", "Kacper")
-      ) +
+        labels = c("Jakub", "Jan", "Kacper")) +
       labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik") +
-      theme(axis.title = element_text(size = 16),
-            axis.text = element_text(size = 13),
-            title = element_text(size = 20),
-            legend.text = element_text(size = 13))
+      theme(
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 13),
+        title = element_text(size = 20),
+        legend.text = element_text(size = 13))
   })
 
   output$plot_comp <- renderPlot({
@@ -87,7 +87,6 @@ function(input, output, session){
     else if(x_coord > 7.5 & x_coord <= 8.5){
       decision <- "instagram.com"
     }
-    print(decision)
     if (!is.null(decision)) {
       updateSelectInput(session, "domain_select", selected = decision)
     }
