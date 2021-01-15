@@ -53,8 +53,7 @@ tabPanel("Średnia aktywność w tygodniu",
                        selected = "stackoverflow.com")),
          mainPanel(
            plotOutput("plot_weekdays", click = "plot_click"),
-           plotOutput("plot_weekhours"),
-           uiOutput("missing_plot")
+           plotOutput("plot_weekhours")
          )),
 tabPanel("Porównanie okresowe",
          div(
