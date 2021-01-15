@@ -124,7 +124,7 @@ function(input, output, session){
        ggplot(wdh1, aes(x = hour, y = average)) +
         geom_bar(stat = "identity", fill = colors_df %>%
                    filter(domain == input$domain_select1) %>%
-                   select(dark_color) %>%
+                   select(medium_color) %>%
                    unlist(use.names = FALSE)) +
         theme_bw() + ggtitle(paste("Średnia liczba wejść a godzina- ", day)) +
         theme(axis.title = element_text(size = 16),
@@ -146,7 +146,7 @@ function(input, output, session){
     cos %>% ggplot(aes(x = weekday, y = average)) +
       geom_bar(stat = "identity", fill = colors_df %>%
                  filter(domain == input$domain_select1) %>%
-                 select(dark_color) %>%
+                 select(medium_color) %>%
                  unlist(use.names = FALSE)) +
       theme_bw() + ggtitle("Średnia liczba wejść a dzień tygodnia") +
       theme(axis.title = element_text(size = 16),
