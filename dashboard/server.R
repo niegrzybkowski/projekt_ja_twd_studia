@@ -43,18 +43,16 @@ function(input, output, session){
       "#0b5ab1",
       "#e8c04a")
   )
+  all_c <- read.csv("../data/allCount.csv", stringsAsFactors = F) %>%
+    mutate(date = as.Date(date))
   output$plot_1 <- renderPlot({
     # cały okres
-    read.csv("../data/allCount.csv") %>%
-      dplyr::as_tibble() %>%
-      mutate(date = as.Date(date)) %>%
-      group_by(date, user, domain) %>%
-      summarise(count = sum(count)) %>%
+    all_c %>%
       filter(domain == input$domain_select) %>%
     ggplot(aes(x = date, y = count, color = user)) +
-      geom_smooth(se = F, formula = y ~ x, method = "loess") +
+      geom_smooth(se = F, formula = y ~ x, method = "loess") + # , span = 0.5, size = 1.5
       theme_bw() +
-      scale_x_date(limits = as.Date(c("2020-01-01", "2021-02-01"))) +
+      scale_x_date(limits = as.Date(c("2019-12-01", "2021-02-01"))) +
       scale_y_continuous(limits = c(0, NA)) +
       scale_color_manual(
         values = colors_df %>%
@@ -64,6 +62,10 @@ function(input, output, session){
       ) +
       labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik")
   })
+  output$plot_comp <- renderPlot({
+
+  })
+
   observeEvent(input$plot_click,{
   output$missing_plot <- renderUI({
     day <- input$plot_click$x
