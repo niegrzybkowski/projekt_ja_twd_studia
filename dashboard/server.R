@@ -86,31 +86,60 @@ function(input, output, session){
       theme(axis.text.x = element_text(angle = 20, hjust = 1))
   })
   observeEvent(input$plot_comp_click, {
-    updateSelectInput(session, "domain_select", selected = "stackoverflow.com")
+    decision <- NULL
+    x_coord <- input$plot_comp_click$x
+    if(x_coord <= 1.5){
+      decision <- "stackoverflow.com"
+    }
+    else if(x_coord > 1.5 & x_coord <= 2.5){
+      decision <- "wikipedia.org"
+    }
+    else if(x_coord > 2.5 & x_coord <= 3.5){
+      decision <- "github.com"
+    }
+    else if(x_coord > 3.5 & x_coord <= 4.5){
+      decision <- "pw.edu.pl"
+    }
+    else if(x_coord > 4.5 & x_coord <= 5.5){
+      decision <- "youtube.com"
+    }
+    else if(x_coord > 5.5 & x_coord <= 6.5){
+      decision <- "google.com"
+    }
+    else if(x_coord > 6.5 & x_coord <= 7.5){
+      decision <- "facebook.com"
+    }
+    else if(x_coord > 7.5 & x_coord <= 8.5){
+      decision <- "instagram.com"
+    }
+    print(decision)
+    if (!is.null(decision)) {
+      updateSelectInput(session, "domain_select", selected = decision)
+    }
   })
 
   observeEvent(input$plot_click,{
   output$missing_plot <- renderUI({
-    day <- input$plot_click$x
-    if(day <= 1.5){
+    x_coord <- input$plot_click$x
+    if(x_coord <= 1.5){
       drawPlot("pon")
     }
-    else if(day > 1.5 & day <= 2.5){
+    else if(x_coord > 1.5 & x_coord <= 2.5){
      drawPlot("wt")
     }
-    else if(day > 2.5 & day <= 3.5){
+    else if(x_coord > 2.5 & x_coord <= 3.5){
       drawPlot("sr")
     }
-    else if(day > 3.5 & day <= 4.5){
+    else if(x_coord > 3.5 & x_coord <= 4.5){
       drawPlot("czw")
     }
-    else if(day > 4.5 & day <= 5.5){
+    else if(x_coord > 4.5 & x_coord <= 5.5){
       drawPlot("pia")
     }
-    else if(day > 5.5 & day <= 6.5){
+    else if(x_coord > 5.5 & x_coord <= 6.5){
       drawPlot("sob")
     }
-    else if(day > 6.5 & day <= 7.5){
+    else if(x_coord > 6.5 & x_coord <= 7.5){
       drawPlot("niedz")
     }
     else {
