@@ -85,6 +85,10 @@ function(input, output, session){
       theme_bw()+
       theme(axis.text.x = element_text(angle = 20, hjust = 1))
   })
+
+  wdt <- read.csv("../data/avgweekdays.csv")
+  wdh <- read.csv("../data/avgweekdaysandhours.csv")
+
   observeEvent(input$plot_comp_click, {
     updateSelectInput(session, "domain_select", selected = "stackoverflow.com")
   })
@@ -133,9 +137,20 @@ function(input, output, session){
     })
 
   }
+  output$plot_weekhours <- renderPlot({
+    wdh1 <- wdh
+    wdh1 <- wdh1 %>% filter(user == input$user_select1, domain == input$domain_select1, weekday == "pon")
+    ggplot(wdh1, aes(x = hour, y = average)) +
+      geom_bar(stat = "identity", fill = colors_df %>%
+                 filter(domain == input$domain_select1) %>%
+                 select(medium_color) %>%
+                 unlist(use.names = FALSE)) +
+      theme_bw() + ggtitle(paste("Średnia liczba wejść a godzina- ", "pon")) +
+      theme(axis.title = element_text(size = 16),
+            axis.text = element_text(size = 13), title = element_text(size = 20)) +
+      labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(0:23))
+  })
 
-  wdt <- read.csv("../data/avgweekdays.csv")
-  wdh <- read.csv("../data/avgweekdaysandhours.csv")
 
   output$plot_weekdays <- renderPlot({
     cos <- wdt
