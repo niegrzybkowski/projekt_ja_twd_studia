@@ -43,8 +43,11 @@ function(input, output, session){
       "#0b5ab1",
       "#e8c04a")
   )
+
+  # STRONA 1
   all_c <- read.csv("../data/allCount.csv", stringsAsFactors = F) %>%
     mutate(date = as.Date(date))
+
   output$plot_1 <- renderPlot({
     # cały okres
     all_c %>%
@@ -67,6 +70,7 @@ function(input, output, session){
             title = element_text(size = 20),
             legend.text = element_text(size = 13))
   })
+
   output$plot_comp <- renderPlot({
     all_c %>%
       group_by(domain) %>%
@@ -92,9 +96,6 @@ function(input, output, session){
             axis.title = element_text(size = 16),
             axis.text = element_text(size = 12), title = element_text(size = 20))
   })
-
-  wdt <- read.csv("../data/avgweekdays.csv")
-  wdh <- read.csv("../data/avgweekdaysandhours.csv")
 
   observeEvent(input$plot_comp_click, {
     decision <- NULL
@@ -129,6 +130,11 @@ function(input, output, session){
     }
   })
 
+  # STRONA 2
+
+  wdt <- read.csv("../data/avgweekdays.csv")
+  wdh <- read.csv("../data/avgweekdaysandhours.csv")
+
   observeEvent(input$plot_click,{
     day <- NULL
     x_coord <- input$plot_click$x
@@ -158,7 +164,6 @@ function(input, output, session){
       updateSelectInput(session, "day_select1", selected = day)
     }})
 
-
   output$plot_weekhours <- renderPlot({
 
      wdh <- wdh %>%
@@ -175,7 +180,6 @@ function(input, output, session){
             axis.text = element_text(size = 13), title = element_text(size = 20)) +
       labs(x = "Godzina", y = "Średnia liczba wejść") + scale_x_discrete(limits = c(minval:maxval))
   })
-
 
   output$plot_weekdays <- renderPlot({
     cos <- wdt
@@ -195,7 +199,7 @@ function(input, output, session){
 
   })
 
-
+  #STRONA 3
 
   output$plot_3 <- renderPlot({
     # dany dzien
