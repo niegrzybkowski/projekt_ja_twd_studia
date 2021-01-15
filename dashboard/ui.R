@@ -28,7 +28,7 @@ navbarPage(
           "),
         p("Oto link do repozytorium zawierające cały projekt:", tags$a(href="https://github.com/niegrzybkowski/studia_twd_p3","github.com/niegrzybkowski/studia_twd_p3")),
         hr(),
-        print("Projekt przygorowany przez Kacpra Grzymkowskiego, Jakuba Fołtyna, Jana Gąske")
+        print("Projekt przygotowany przez Kacpra Grzymkowskiego, Jakuba Fołtyna, Jana Gąske")
 
 
       ),
