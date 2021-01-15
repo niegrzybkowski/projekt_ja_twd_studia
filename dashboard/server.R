@@ -126,8 +126,7 @@ function(input, output, session){
       theme_bw() + ggtitle("Średnia liczba wejść a dzień tygodnia") +
       theme(axis.title = element_text(size = 16),
             axis.text = element_text(size = 13), title = element_text(size = 20)) +
-      labs(x = "Dzień tygodnia", y = "Średnia liczba wejść") #+
-      #scale_x_discrete(labels = c("niedz","pon", "wt", "sr", "czw", "pia", "sob"))
+      labs(x = "Dzień tygodnia", y = "Średnia liczba wejść")
 
   })
 

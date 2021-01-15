@@ -1,36 +1,15 @@
 library(lubridate)
 library(dplyr)
 
-kacper <- read.csv("data/kacper.csv")
-jan <- read.csv("data/jan.csv")
-jakub <- read.csv("data/jakub.csv")
 
-combined <- bind_rows(kacper %>% mutate("user" = "kacper"),
-                      jakub %>% mutate("user" = "jakub"),
-                      jan %>% mutate("user"= "jan")
-                      ) %>% rename("date" = "time_usec")
-combined <- combined %>% select(-X) %>% mutate("weekdat" = wday(combined$date), "hours" = hour(combined$date))
-
-comb1 <- combined %>% group_by("user" = combined$user,
-                             "weekday" =  combined$weekdat,
-                               "hour" = combined$hours,
-                               "domain" = combined$domain) %>%
-                          dplyr::count(name = "average")
-
-ndkac <- length(unique(as.Date(kacper$time_usec)))
-ndjan <- length(unique(as.Date(jan$time_usec)))
-ndjak <- length(unique(as.Date(jakub$time_usec)))
-
-nkac <- nrow(comb1 %>% filter(user == "kacper"))
-njan <- nrow(comb1 %>% filter(user == "jan"))
-njak <- nrow(comb1 %>% filter(user == "jakub"))
-
-comb1$average[1:njak] <- comb1$average[1:njak]/ndjak
-comb1$average[(njak+1):(njak+njan)] <- comb1$average[(njak+1):(njak+njan)]/ndjan
-comb1$average[(njak+njan+1):(njak+njan+nkac)] <- comb1$average[(njak+njan+1):(njak+njan+nkac)]/ndkac
 
 #Tworzenie tablicy ze średnią liczbą wejść na dzień tygodnia
+numDays <- all_dataweek %>% group_by("user" = all_dataweek$user,
+                              "weekday" =  all_dataweek$weekdat) %>%
+   dplyr::count(name = "NoDays")
+numDays$NoDays <- numDays$NoDays/8
 
+head(numDays)
 all_data <- read.csv("data/allCount.csv")
 all_dataweek <- all_data %>% mutate("weekdat" = wday(all_data$date))
 
@@ -57,17 +36,10 @@ comb1 <- combined %>% group_by("user" = combined$user,
                                "domain" = combined$domain) %>%
   dplyr::count(name = "average")
 
-ndkac <- length(unique(as.Date(kacper$time_usec)))
-ndjan <- length(unique(as.Date(jan$time_usec)))
-ndjak <- length(unique(as.Date(jakub$time_usec)))
+test <- left_join(comb1, numDays, by = c("user", "weekday"))
+test$average <- test$average/test$NoDays
+comb1 <- test %>% select(-NoDays)
 
-nkac <- nrow(comb1 %>% filter(user == "kacper"))
-njan <- nrow(comb1 %>% filter(user == "jan"))
-njak <- nrow(comb1 %>% filter(user == "jakub"))
-
-comb1$average[1:njak] <- comb1$average[1:njak]/ndjak
-comb1$average[(njak+1):(njak+njan)] <- comb1$average[(njak+1):(njak+njan)]/ndjan
-comb1$average[(njak+njan+1):(njak+njan+nkac)] <- comb1$average[(njak+njan+1):(njak+njan+nkac)]/ndkac
 domain <- rep(c( "stackoverflow.com",
    "wikipedia.org",
    "github.com",
