@@ -61,7 +61,11 @@ function(input, output, session){
           unlist(use.names = F),
         labels = c("Jakub", "Jan", "Kacper")
       ) +
-      labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik")
+      labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik") +
+      theme(axis.title = element_text(size = 16),
+            axis.text = element_text(size = 13),
+            title = element_text(size = 20),
+            legend.text = element_text(size = 13))
   })
   output$plot_comp <- renderPlot({
     all_c %>%
@@ -83,8 +87,10 @@ function(input, output, session){
       ggtitle("Ogólne użycie stron") +
       labs(x = "Domena", y = "Łączna ilość wejść") +
       theme_bw()+
-      theme(axis.text.x = element_text(angle = 20, hjust = 1),
-            plot.background = element_rect(fill = "#f5f5f5"))
+      theme(axis.text.x = element_text(angle = 30, hjust = 1),
+            plot.background = element_rect(fill = "#f5f5f5", color = "#f5f5f5"),
+            axis.title = element_text(size = 16),
+            axis.text = element_text(size = 12), title = element_text(size = 20))
   })
 
   wdt <- read.csv("../data/avgweekdays.csv")
