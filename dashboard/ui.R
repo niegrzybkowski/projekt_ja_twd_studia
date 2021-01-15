@@ -63,6 +63,16 @@ tabPanel("Średnia aktywność w tygodniu",
 tabPanel(
   "Balans rozrywka/edukacja",
   sliderInput(
-    "balans"
-  )
+    "balans",
+    label = "Wybierz miesiąc",
+    min = as.Date("2019-12-01"),
+    max = as.Date("2021-01-01"),
+    value = as.Date("2020-04-01"),
+    timeFormat = "%Y-%m",
+    ticks = F,
+    animate = animationOptions(
+      interval = 30, loop = F
+    )
+  ),
+  #plotOutput("plot_balans")
 ))
