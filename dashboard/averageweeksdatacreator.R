@@ -4,12 +4,7 @@ library(dplyr)
 
 
 #Tworzenie tablicy ze średnią liczbą wejść na dzień tygodnia
-numDays <- all_dataweek %>% group_by("user" = all_dataweek$user,
-                              "weekday" =  all_dataweek$weekdat) %>%
-   dplyr::count(name = "NoDays")
-numDays$NoDays <- numDays$NoDays/8
 
-head(numDays)
 all_data <- read.csv("data/allCount.csv")
 all_dataweek <- all_data %>% mutate("weekdat" = wday(all_data$date))
 
@@ -36,9 +31,15 @@ comb1 <- combined %>% group_by("user" = combined$user,
                                "domain" = combined$domain) %>%
   dplyr::count(name = "average")
 
-test <- left_join(comb1, numDays, by = c("user", "weekday"))
-test$average <- test$average/test$NoDays
-comb1 <- test %>% select(-NoDays)
+numDays <- all_dataweek %>% group_by("user" = all_dataweek$user,
+                              "weekday" =  all_dataweek$weekdat) %>%
+   dplyr::count(name = "NoDays")
+
+numDays$NoDays <- numDays$NoDays/8
+
+pomocnicza <- left_join(comb1, numDays, by = c("user", "weekday"))
+pomocnicza$average <- pomocnicza$average/pomocnicza$NoDays
+comb1 <- pomocnicza %>% select(-NoDays)
 
 domain <- rep(c( "stackoverflow.com",
    "wikipedia.org",
