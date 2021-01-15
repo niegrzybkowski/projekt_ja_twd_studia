@@ -142,7 +142,7 @@ function(input, output, session){
     tabelka <- as.data.frame(tabelka)
     dany_dzien <- as.character(input$Date_select)
     dany_dzien <- format(as.POSIXct(dany_dzien,format='%Y-%m-%d'),format='%Y/%m/%d')
-    jaka_strona <- as.character(input$domain_select)
+    jaka_strona <- as.character(input$domain_select3)
 
     dzien_data <- tabelka[format(as.POSIXct(tabelka$time_usec,format='%Y-%m-%d %H:%M:%S'),format='%Y/%m/%d') == dany_dzien,]
     dzien_data <- dzien_data[dzien_data$domain == jaka_strona,]
