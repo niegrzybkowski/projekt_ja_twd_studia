@@ -4,7 +4,7 @@ library(plotly)
 navbarPage(
   "Nasze dane pomocy studenta",
   tabPanel(
-    "Porównanie użytkowników/domen",
+    "Porównanie ogólne",
     sidebarLayout(
       sidebarPanel(
         selectInput(
