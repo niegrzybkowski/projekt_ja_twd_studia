@@ -26,7 +26,7 @@ navbarPage(
           Sprawdzone zostało w jakim stopniu korzystali ze ston znanych każdemu szanującemu się studentowi IT, porkoju stackoverflow czy github.\n
           Nasze przestawiliśmy na trzech stonach, na każdej z nich ukazana została inna idea naszej analizy. Zapraszamy do użytkowania !!!
           "),
-        p("Oto link do repozytorium zawierające cały projekt:", tags$a(href="https://github.com/niegrzybkowski/studia_twd_p3","github.com/niegrzybkowski/studia_twd_p3")),
+        # p("Oto link do repozytorium zawierające cały projekt:", tags$a(href="https://github.com/niegrzybkowski/studia_twd_p3","github.com/niegrzybkowski/studia_twd_p3")),
         hr(),
         print("Projekt przygotowany przez Kacpra Grzymkowskiego, Jakuba Fołtyna, Jana Gąske")
 
