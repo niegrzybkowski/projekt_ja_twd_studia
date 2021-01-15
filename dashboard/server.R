@@ -58,12 +58,35 @@ function(input, output, session){
         values = colors_df %>%
           filter(domain == input$domain_select) %>%
           select(-domain) %>%
-          unlist(use.names = F)
+          unlist(use.names = F),
+        labels = c("Jakub", "Jan", "Kacper")
       ) +
       labs(x = "Data", y = "Średnia liczba wejść", color = "Użytkownik")
   })
   output$plot_comp <- renderPlot({
-
+    all_c %>%
+      group_by(domain) %>%
+      summarise(total = sum(count)) %>%
+      mutate(domain = factor(
+        domain, levels = c(
+          "stackoverflow.com",
+          "wikipedia.org",
+          "github.com",
+          "pw.edu.pl",
+          "youtube.com",
+          "google.com",
+          "facebook.com",
+          "instagram.com")
+      )) %>%
+      ggplot(aes(x = domain, y = total)) +
+      geom_col(fill = "slateblue") +
+      ggtitle("Ogólne użycie stron") +
+      labs(x = "Domena", y = "Łączna ilość wejść") +
+      theme_bw()+
+      theme(axis.text.x = element_text(angle = 20, hjust = 1))
+  })
+  observeEvent(input$plot_comp_click, {
+    updateSelectInput(session, "domain_select", selected = "stackoverflow.com")
   })
 
   observeEvent(input$plot_click,{
