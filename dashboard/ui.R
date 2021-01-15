@@ -2,15 +2,8 @@ library(DT)
 library(plotly)
 
 navbarPage("Nasze dane pomocy studenta",
-           tabPanel("str1",
+           tabPanel("Porównanie użytkowników/domen",
   sidebarPanel(
-    selectInput("user_select",
-                label = "Wybierz użytkownika:",
-                choices = c("Kacper" = "kacper",
-                            "Jakub" = "jakub",
-                            "Janek" = "jan"),
-                multiple = FALSE,
-                selected = "Kacper"),
     selectInput("domain_select",
                 label = "Wybierz domenę:",
                 choices = c("stackoverflow.com",
