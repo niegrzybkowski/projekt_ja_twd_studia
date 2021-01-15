@@ -6,10 +6,10 @@ library(dplyr)
 library(plotly)
 
 function(input, output, session){
-  colors_df <- read.csv("../data/colors.csv", stringsAsFactors = F)
+  colors_df <- read.csv("data/colors.csv", stringsAsFactors = F)
 
   # STRONA 1
-  all_c <- read.csv("../data/allCount.csv", stringsAsFactors = F) %>%
+  all_c <- read.csv("data/allCount.csv", stringsAsFactors = F) %>%
     mutate(date = as.Date(date))
 
   output$plot_1 <- renderPlot({
@@ -95,8 +95,8 @@ function(input, output, session){
 
   # STRONA 2
 
-  wdt <- read.csv("../data/avgweekdays.csv")
-  wdh <- read.csv("../data/avgweekdaysandhours.csv")
+  wdt <- read.csv("data/avgweekdays.csv")
+  wdh <- read.csv("data/avgweekdaysandhours.csv")
 
   observeEvent(input$plot_click,{
     day <- NULL
@@ -188,7 +188,7 @@ function(input, output, session){
       write.csv("data/balance.csv", row.names = F)
   }
 
-  balance_df <- read.csv("../data/balance.csv", stringsAsFactors = F)
+  balance_df <- read.csv("data/balance.csv", stringsAsFactors = F)
 
   output$plot_scatter <- renderPlot({
     balance_df %>%
