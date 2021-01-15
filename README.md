@@ -1,3 +1,3 @@
-# studia_twd_p3
-TWD repo projektu 3
-student piwo debil ze stacka kopiuje
+# TWD projekt 3
+Projekt JA - analiza historii przeglądania
+TODO: dodać link do shinyappsa
