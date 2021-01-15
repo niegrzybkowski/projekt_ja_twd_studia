@@ -84,16 +84,15 @@ navbarPage(
            )),
   tabPanel(
     "Balans rozrywka/edukacja",
-    plotlyOutput("plotly_scatter"),
     br(),
     br(),
     sidebarPanel(
-      h4("Nie samąc pracą człowiek żyje."),
+      h4("Nie samą pracą człowiek żyje."),
       p("Ciężka praca się opłaca, jednakże rozrywka i relaks również są ważne, w tej części przygotowaliśmy animację porównującą wejścia
         dwóch użytkowników na strony o charakterze edukacyjnym i na strony o charakterze rozrywkowym, w całym okresie analizy danych."),
       p("Położenie na osi X informuje o ilości wejść na stony rozrywkowe, a oś Y ilość wejść na strony edukacyjne.")
-      ,width = 5
-
-
-    ),
+      ),
+    mainPanel(
+      plotlyOutput("plotly_scatter")
+    )
   ))
