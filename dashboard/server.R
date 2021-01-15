@@ -94,7 +94,7 @@ function(input, output, session){
   })
 
   wdt <- read.csv("../data/avgweekdays.csv")
-
+  wdh <- read.csv("../data/avgweekdaysandhours.csv")
 
   observeEvent(input$plot_comp_click, {
     decision <- NULL
@@ -130,7 +130,6 @@ function(input, output, session){
   })
 
   observeEvent(input$plot_click,{
-  output$missing_plot <- renderUI({
     day <- NULL
     x_coord <- input$plot_click$x
     if(x_coord <= 1.5){
@@ -157,11 +156,11 @@ function(input, output, session){
 
     if (!is.null(day)) {
       updateSelectInput(session, "day_select1", selected = day)
-    }})})
+    }})
 
 
   output$plot_weekhours <- renderPlot({
-     read.csv("../data/avgweekdaysandhours.csv") %>%
+     wdh %>%
       filter(user == input$user_select1, domain == input$domain_select1, weekday == input$day_select1) %>%
     ggplot( aes(x = hour, y = average)) +
       geom_bar(stat = "identity", fill = colors_df %>%
