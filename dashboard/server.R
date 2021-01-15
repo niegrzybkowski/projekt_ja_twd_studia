@@ -5,44 +5,7 @@ library(lubridate)
 library(dplyr)
 
 function(input, output, session){
-  colors_df <- tibble(
-    domain = c(
-      "stackoverflow.com",
-      "wikipedia.org",
-      "github.com",
-      "pw.edu.pl",
-      "youtube.com",
-      "google.com",
-      "facebook.com",
-      "instagram.com"),
-    light_color = c(
-      "#ffc43b",
-      "#8d8da5",
-      "#e88cd3",
-      "#5fd9cd",
-      "#ff5c5c",
-      "#0000dd",
-      "#91c8ff",
-      "#b130ba"),
-    medium_color = c(
-      "#f48024",
-      "#63639e",
-      "#a526b8",
-      "#0095af",
-      "#f00000",
-      "#ffc30b",
-      "#1877f2",
-      "#4d5eca"),
-    dark_color = c(
-      "#b24e15",
-      "#2d2d39",
-      "#381567",
-      "#1c475a",
-      "#8f0000",
-      "#dd0000",
-      "#0b5ab1",
-      "#e8c04a")
-  )
+  colors_df <- read.csv("data/colors.csv", stringsAsFactors = F)
 
   # STRONA 1
   all_c <- read.csv("../data/allCount.csv", stringsAsFactors = F) %>%
