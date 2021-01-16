@@ -20,7 +20,7 @@ navbarPage(
                       "instagram.com"),
           selected = "stackoverflow.com"),
         plotOutput("plot_comp", click = "plot_comp_click", height = "300px"),
-        h2("Witaj zaciekawiony użytkowniku sieci!!!"),
+        h2("Cześć!"),
         p("Skoro już do nas zajrzałeś, to zechcemy opowiedzieć Ci o naszym projekcie, który przedwsięwzieliśmy z zajęć TWD.
           Trzech śmiałków: Kacper, Jakub oraz Janek dobrodusznie udostępnili swoje dane przeglądarkowe by móc poddać je analizie.
           Sprawdzone zostało w jakim stopniu korzystali ze ston znanych każdemu szanującemu się studentowi IT, porkoju stackoverflow czy github.\n
