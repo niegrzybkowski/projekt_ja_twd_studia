@@ -1,7 +1,7 @@
 # TWD projekt 3
 Projekt JA - analiza historii przeglądania
 
-TODO: dodać link do shinyappsa
+[Link do aplikacji na shinyapps.io](http://grzymkowskik.shinyapps.io/dashboard)
 
 Struktura folderów:
 * scripts - skrypty przetwarzające dane
