@@ -1,5 +1,5 @@
 # TWD projekt 3
-Projekt JA - analiza historii przeglądania
+Projekt JA - analiza historii przeglądania. Autorzy: Kacper Grzymkowski, Jakub Fołtyn i Jan Gąska
 
 [Link do aplikacji na shinyapps.io](http://grzymkowskik.shinyapps.io/dashboard)
 
