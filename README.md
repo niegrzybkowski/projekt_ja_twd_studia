@@ -1,5 +1,5 @@
 # Projekt JA - Analiza historii przeglądania.
-Projekt wykonany w ramach przedmiotu Techniki Wizualizacji Danych.
+Projekt wykonany w ramach przedmiotu [Techniki Wizualizacji Danych](https://github.com/mini-pw/2021Z-DataVisualizationTechniques).
 
 Autorzy: Kacper Grzymkowski, Jakub Fołtyn i Jan Gąska
 
