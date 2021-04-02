@@ -12,7 +12,25 @@ Autorzy: Kacper Grzymkowski, Jakub Fołtyn i Jan Gąska
 * dashboard - kod aplikacji
 
 ## Screenshoty
+![Pierwsza strona](screenshots/1st_page_1.png)
 
+![Pierwsza strona](screenshots/1st_page_2.png)
+
+![Pierwsza strona](screenshots/1st_page_menu.png)
+
+![Pierwsza strona](screenshots/1st_page_menu_unfolded.png)
+
+![Druga strona](screenshots/2nd_page_1.png)
+
+![Druga strona](screenshots/2nd_page_2.png)
+
+![Druga strona](screenshots/2nd_page_3.png)
+
+![Druga strona](screenshots/2nd_page_menu.png)
+
+![Trzecia strona](screenshots/3rd_page_1.png)
+
+![Trzecia strona](screenshots/3rd_page_desc.png)
 
 
 
