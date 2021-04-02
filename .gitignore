@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Raw data
 raw_data/*.json
+
+#Screenshots
+/super_screeny
