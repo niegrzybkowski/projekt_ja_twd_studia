@@ -4,7 +4,7 @@ Project Me,myself and I - browsing history analysis. Made by: Kacper Grzymkowski
 [Shinyapps.io application link](http://grzymkowskik.shinyapps.io/dashboard)
 
 Folder structure:
-* scripts - sdata processing scripts
+* scripts - data processing scripts
 * raw_data - .json files from google takeout. Hidden for privacy reasons
 * data - files with data extracted from .json
 * dashboard - application code
